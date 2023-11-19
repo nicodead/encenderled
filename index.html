@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Prueba</title>
+
+    <style>
+        body{text-align:center;}
+    </style>
+</head>
+
+<body>
+    <div id="Ingresar">
+        <h1>Ingresar Estado</h1>
+        <h4>"encender" o "apagar"</h4>
+        
+        <button id="encender">Encender</button>
+        <button id="apagar">Apagar</button>
+    </div>
+    
+    
+    <script type="module">
+        // Import the necessary functions from Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-app.js";
+        import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAz8XO6ECsOWQk5qEU1pAe1lax3xT_QlFY",
+            authDomain: "proyecto-manhattan-91e8e.firebaseapp.com",
+            databaseURL: "https://proyecto-manhattan-91e8e-default-rtdb.firebaseio.com",
+            projectId: "proyecto-manhattan-91e8e",
+            storageBucket: "proyecto-manhattan-91e8e.appspot.com",
+            messagingSenderId: "755694415430",
+            appId: "1:755694415430:web:ae5c21c8526c2357346447",
+            measurementId: "G-FPDH08GMTY"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        const db = getDatabase();
+
+        const botonEncender = document.querySelector("#encender");
+        const botonApagar = document.querySelector("#apagar");
+
+        function cambiarEstado(estado) {
+            set(ref(db, "Led/"), {
+                Estado: estado,
+            })
+            .then(() => {
+                alert(`El LED ha sido ${estado}`);
+            })
+            .catch((error) => {
+                alert(error);
+            });
+        }
+
+        botonEncender.addEventListener("click", () => {
+            cambiarEstado("encendido");
+        });
+
+        botonApagar.addEventListener("click", () => {
+            cambiarEstado("apagado");
+        });
+    </script>
+    
+</body>
+</html>
